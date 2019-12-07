@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/path-find-cisualiser/static/css/main.b12e3a81.chunk.css",
+    "main.js": "/path-find-cisualiser/static/js/main.7b33e624.chunk.js",
+    "main.js.map": "/path-find-cisualiser/static/js/main.7b33e624.chunk.js.map",
+    "runtime-main.js": "/path-find-cisualiser/static/js/runtime-main.a06308ed.js",
+    "runtime-main.js.map": "/path-find-cisualiser/static/js/runtime-main.a06308ed.js.map",
+    "static/css/2.833dd627.chunk.css": "/path-find-cisualiser/static/css/2.833dd627.chunk.css",
+    "static/js/2.e4e66c4a.chunk.js": "/path-find-cisualiser/static/js/2.e4e66c4a.chunk.js",
+    "static/js/2.e4e66c4a.chunk.js.map": "/path-find-cisualiser/static/js/2.e4e66c4a.chunk.js.map",
+    "index.html": "/path-find-cisualiser/index.html",
+    "precache-manifest.bcacb3665d7c7d4a436985d7743d9d8d.js": "/path-find-cisualiser/precache-manifest.bcacb3665d7c7d4a436985d7743d9d8d.js",
+    "service-worker.js": "/path-find-cisualiser/service-worker.js",
+    "static/css/2.833dd627.chunk.css.map": "/path-find-cisualiser/static/css/2.833dd627.chunk.css.map",
+    "static/css/main.b12e3a81.chunk.css.map": "/path-find-cisualiser/static/css/main.b12e3a81.chunk.css.map"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.a06308ed.js",
+    "static/css/2.833dd627.chunk.css",
+    "static/js/2.e4e66c4a.chunk.js",
+    "static/css/main.b12e3a81.chunk.css",
+    "static/js/main.7b33e624.chunk.js"
+  ]
+}
