@@ -5,7 +5,7 @@ class NavBar extends Component {
     const { handleAlgoDropdown } = this.props;
 
     return (
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+      <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
         <a className="navbar-brand" href="#">
           Path Searching Algorithms
         </a>
@@ -53,7 +53,7 @@ class NavBar extends Component {
                 </button>
               </ul>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <a className="nav-link" href="#">
                 Home <span className="sr-only">(current)</span>
               </a>
@@ -67,7 +67,7 @@ class NavBar extends Component {
               <a className="nav-link" href="#">
                 Pricing
               </a>
-            </li>
+            </li> */}
           </ul>
         </div>
       </nav>
