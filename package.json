@@ -2,7 +2,7 @@
   "name": "path-find-visualizer",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://tlee10.github.io/path-find-visualiser",
+  "homepage": "https://tlee10.github.io/path-find-visualiser/",
   "dependencies": {
     "bootstrap": "^4.3.1",
     "flatted": "^2.0.1",
