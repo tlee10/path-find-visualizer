@@ -6,17 +6,17 @@ const graphSearch = (graph, ordering) => {
   const closedList = graph.closed;
   openList.push(startNode);
   let reachedGoal = false;
+  if (ordering === "A*") startNode.h = heuristic(startNode, goalNode);
   let actions, current;
 
   while (openList.length) {
     current = openList.shift();
-    // console.log(current);
-    // console.log(openList.length);
+    closedList.push(current);
+
     if (current === goalNode) {
       reachedGoal = true;
       break;
     } else {
-      closedList.push(current);
       //all allowed actions for current node
       actions = formulateActions(current, graph);
       //different ordering of open list for each algo
@@ -24,17 +24,25 @@ const graphSearch = (graph, ordering) => {
         //destination not in closed list
         if (!graph.checkClosed(destination)) {
           switch (ordering) {
-            case "bfs":
+            case "BFS":
               //console.log("bfs");
-              setInterval(10000);
               bfs(current, destination, graph);
               break;
-            case "dfs":
+            case "DFS":
               dfs(current, destination, graph);
               break;
+            //algorithms with weighted graph
+            default:
+              if (ordering === "A*")
+                destination.h = heuristic(destination, goalNode);
+              weightedSearch(current, destination, graph);
           }
         }
       });
+      //algorithms that use priority queue
+      if (ordering === "Dijkstra" || ordering === "A*") {
+        openList.sort((a, b) => (a.f < b.f ? -1 : 1));
+      }
     }
   }
   let path = "";
@@ -45,21 +53,15 @@ const graphSearch = (graph, ordering) => {
       path = "-node(" + current.row + "," + current.col + ")" + path;
       current = current.parent;
     }
-    path = "node(" + current.row + "," + current.col + ")" + path; 
+    path = "node(" + current.row + "," + current.col + ")" + path;
   }
   console.log(path);
 };
 
-const updateDiscoveredNode = (current, parent, weight) => {
-  // console.log(
-  //   "parent Node[" + parent.row.toString() + "," + parent.col.toString() + "]"
-  // );
-  // console.log(
-  //   "child Node[" + current.row.toString() + "," + current.col.toString() + "]"
-  // );
-  current.parent = parent;
-  current.g = parent.g + weight;
-  current.f = current.g + current.h;
+const updateDiscoveredNode = (destination, current, weight) => {
+  destination.parent = current;
+  destination.g = current.g + weight;
+  destination.f = destination.g + destination.h;
 };
 
 const formulateActions = (current, graph) => {
@@ -68,12 +70,12 @@ const formulateActions = (current, graph) => {
   const actions = [];
   //up
   if (row > 0) actions.push(graph.nodes[row - 1][col]);
+  //right
+  if (col < graph.nodes[0].length - 1) actions.push(graph.nodes[row][col + 1]);
   //down
   if (row < graph.nodes.length - 1) actions.push(graph.nodes[row + 1][col]);
   //left
   if (col > 0) actions.push(graph.nodes[row][col - 1]);
-  //right
-  if (col < graph.nodes[0].length - 1) actions.push(graph.nodes[row][col + 1]);
 
   return actions;
 };
@@ -87,11 +89,40 @@ const bfs = (current, destination, graph) => {
 };
 
 const dfs = (current, destination, graph) => {
-  //destination not in open list
+  updateDiscoveredNode(destination, current, 1);
+  //deepest node expands first
+  graph.open.unshift(destination);
+};
+
+// const dijkstra = (current, destination, graph) => {
+//   if (!graph.checkOpen(destination)){
+//     updateDiscoveredNode(destination, current, current.weight);
+//     graph.open.push(destination);
+//   }
+//   else {
+//     if (current.f + destination.weight < destination.f){
+//       updateDiscoveredNode(destination, current, destination.weight);
+//     }
+//   }
+// }
+
+const weightedSearch = (current, destination, graph) => {
   if (!graph.checkOpen(destination)) {
-    updateDiscoveredNode(destination, current, 1);
-    graph.open.unshift(destination);
+    updateDiscoveredNode(destination, current, current.weight);
+    graph.open.push(destination);
+  } else {
+    let cost = current.g + destination.weight;
+    if (cost + destination.h < destination.f) {
+      updateDiscoveredNode(destination, current, destination.weight);
+    }
   }
 };
 
-export { graphSearch, updateDiscoveredNode, bfs, dfs, formulateActions };
+//Manhattan Distance (the lightest weight = 1)
+const heuristic = (node, goalNode) => {
+  let dx = Math.abs(node.col - goalNode.col);
+  let dy = Math.abs(node.row - goalNode.row);
+  return dx + dy;
+};
+
+export default graphSearch;

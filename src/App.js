@@ -3,13 +3,13 @@ import "./App.css";
 import Grid from "./components/Grid";
 import NavBar from "./components/NavBar";
 import Graph from "./Graph";
-import * as algo from "./algorithms";
+import graphSearch from "./algorithms";
 import _ from "lodash";
 import { node } from "prop-types";
 
 const START_NODE_ROW = 12;
 const START_NODE_COL = 15;
-const GOAL_NODE_ROW = 12;
+const GOAL_NODE_ROW = 0;
 const GOAL_NODE_COL = 35;
 
 class App extends Component {
@@ -41,11 +41,11 @@ class App extends Component {
   handleAlgoDropdown(name) {
     const { graph } = this.state;
     graph.resetGraph();
-    algo.graphSearch(graph, name);
+    graphSearch(graph, name);
     this.animateSearch();
   }
 
-  animateSearch(){
+  animateSearch() {
     const currentGraph = this.state.graph;
     //const newGraph = JSON.parse(JSON.stringify(currentGraph));
     //const newGraph = Flatted.parse(Flatted.stringify(currentGraph));
@@ -61,16 +61,16 @@ class App extends Component {
     //     this.setState({graph: newGraph});
     //   }, 1000*iteration);
     // });
-    for (let i = 0; i < currentGraph.closed.length; i++){
-      const node = currentGraph.closed[i];
-      const newNode = {
-        ...node,
-        visited: true,
-      }
-      newGraph.nodes[node.row][node.col] = newNode;
+    for (let i = 0; i < currentGraph.closed.length; i++) {
       setTimeout(() => {
-        this.setState({graph: newGraph});
-          }, 10*i);
+        const node = currentGraph.closed[i];
+        const newNode = {
+          ...node,
+          visited: true
+        };
+        newGraph.nodes[node.row][node.col] = newNode;
+        this.setState({ graph: newGraph });
+      }, 100 * i);
     }
   }
 

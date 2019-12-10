@@ -2,8 +2,8 @@ import React, { Component } from "react";
 
 class NavBar extends Component {
   render() {
+    const algorithms = ["BFS", "DFS", "Dijkstra", "A*"];
     const { handleAlgoDropdown } = this.props;
-
     return (
       <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
         <a className="navbar-brand" href="#">
@@ -35,39 +35,18 @@ class NavBar extends Component {
                 <span className="caret"></span>
               </button>
               <ul className="dropdown-menu" aria-labelledby="dropdownMenu2">
-                <button
-                  className="dropdown-item"
-                  type="button"
-                  id="startButtonDijkstra"
-                  onClick={() => handleAlgoDropdown("bfs")}
-                >
-                  BFS
-                </button>
-                <button
-                  className="dropdown-item"
-                  type="button"
-                  id="startButtonDijkstra"
-                  onClick={() => handleAlgoDropdown("dfs")}
-                >
-                  DFS
-                </button>
+                {algorithms.map(algo => {
+                  return (
+                    <button
+                      className="dropdown-item"
+                      onClick={() => handleAlgoDropdown(algo)}
+                    >
+                      {algo}
+                    </button>
+                  );
+                })}
               </ul>
             </li>
-            {/* <li className="nav-item">
-              <a className="nav-link" href="#">
-                Home <span className="sr-only">(current)</span>
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                Features
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                Pricing
-              </a>
-            </li> */}
           </ul>
         </div>
       </nav>

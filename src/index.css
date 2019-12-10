@@ -14,19 +14,24 @@ code {
 
 .node {
   background: #fff;
-  border: 1px solid #999999;
-  height: 4vh;
-  width: 4.5vh;
+  border: 1px solid yellow;
+  width: 1.8vw;
   display: inline-block;
+  text-align: center;
 }
 
 .row {
   margin-top: -3px;
+  height: 3.8vh;
 }
 
 .grid {
-  margin: 100px 0 0 30px;
-  height: 100vh;
+  /* margin: 100px 0 0 120px; */
+  height: 70%;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  vertical-align: middle;
 }
 
 .nav-item {

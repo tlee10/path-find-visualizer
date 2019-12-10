@@ -29,6 +29,7 @@ class Graph {
       isWall: false,
       visited: false,
       depth: 0,
+      weight: 1,
       g: 0,
       h: 0,
       f: 0
