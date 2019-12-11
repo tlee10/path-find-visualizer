@@ -18,13 +18,19 @@ class App extends Component {
     this.state = {
       graph: new Graph(),
       algorithms: [{ name: "bfs" }, { name: "dfs" }],
-      algoChosen: null
+      algoChosen: null,
+      animationActivated: false,
+      isSpecialNode: ""
     };
-    this.handleAlgoDropdown = this.handleAlgoDropdown.bind(this);
-    this.animateSearch = this.animateSearch.bind(this);
+    // this.handleAlgoDropdown = this.handleAlgoDropdown.bind(this);
+    // this.animateSearch = this.animateSearch.bind(this);
+    // this.onMouseDown = this.onMouseDown.bind(this);
+    // this.onMouseEnter = this.onMouseEnter.bind(this);
+    // this.onMouseUp = this.onMouseUp.bind(this);
+    // this.onMouseLeave = this.onMouseLeave.bind(this);
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     const graph = new Graph();
     graph.initializeGraph();
 
@@ -36,16 +42,63 @@ class App extends Component {
     graph.goalNode = goalNode;
     goalNode.isGoal = true;
     this.setState({ graph });
-  }
+  };
 
-  handleAlgoDropdown(name) {
+  //algorithm selection
+  handleAlgoDropdown = name => {
     const { graph } = this.state;
     graph.resetGraph();
     graphSearch(graph, name);
     this.animateSearch();
-  }
+  };
 
-  animateSearch() {
+  onMouseDown = node => {
+    //user clicked on start node or goal node
+    if (
+      (node.isGoal && !this.state.animationActivated) ||
+      (node.isStart && !this.state.animationActivated)
+    )
+      this.setState({ isSpecialNode: node.isStart ? "start" : "goal" });
+    ;
+  };
+
+  onMouseEnter = node => {
+    const graph = this.state.graph;
+    if (this.state.isSpecialNode !== "") {
+      
+      if (this.state.isSpecialNode === "start") {
+        graph.startNode = node;
+        node.isStart = true;
+      } else {
+        graph.goalNode = node;
+        node.isGoal = true;
+      }
+      this.setState({ graph });
+      
+    }
+  };
+
+  onMouseLeave = node => {
+    const graph = this.state.graph;
+    if (this.state.isSpecialNode !== "") {
+      
+      if (this.state.isSpecialNode === "start") {
+        node.isStart = false;
+      } else {
+        node.isGoal = false;
+      }
+      this.setState({ graph });
+      
+    }
+  };
+
+  onMouseUp = node => {
+    //mouse up after either start node or goal node is clicked
+    if (this.state.isSpecialNode !== "") this.setState({ isSpecialNode: "" });
+    
+  };
+
+  animateSearch = () => {
     const currentGraph = this.state.graph;
     //const newGraph = JSON.parse(JSON.stringify(currentGraph));
     //const newGraph = Flatted.parse(Flatted.stringify(currentGraph));
@@ -72,13 +125,19 @@ class App extends Component {
         this.setState({ graph: newGraph });
       }, 100 * i);
     }
-  }
+  };
 
   render() {
     return (
       <React.Fragment>
         <NavBar handleAlgoDropdown={this.handleAlgoDropdown} />
-        <Grid grid={this.state.graph.nodes} />
+        <Grid
+          grid={this.state.graph.nodes}
+          onMouseDown={this.onMouseDown}
+          onMouseEnter={this.onMouseEnter}
+          onMouseLeave={this.onMouseLeave}
+          onMouseUp={this.onMouseUp}
+        />
       </React.Fragment>
     );
   }

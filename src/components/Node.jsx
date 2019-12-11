@@ -1,19 +1,31 @@
-import '/Users/tx-10/Desktop/react/path-find-visualizer/src/App.css';
-import React from 'react';
+import "/Users/tx-10/Desktop/react/path-find-visualizer/src/App.css";
+import React from "react";
 
-const Node = (props) => {
-  
+const Node = props => {
   //const {col, row, isDiscovered, isVisited, isWall}
-  const {isStart, isGoal, row, col, visited} = props.node;
+  
+  const {
+    node,
+    onMouseDown,
+    onMouseEnter,
+    onMouseLeave,
+    onMouseUp
+  } = props;
 
-  const isVisited = visited ? "visited": "";
+  const isVisited = node.visited ? "visited" : "";
 
-  return ( 
-    <div id={`node-${row}-${col}`} className={`node ${isVisited}`}>
-      <strong>{isStart ? "S": isGoal ? "G" : ""}</strong>
+  return (
+    <div
+      id={`node-${node.row}-${node.col}`}
+      className={`node ${isVisited}`}
+      onMouseDown={() => onMouseDown(node)}
+      onMouseEnter={() => onMouseEnter(node)}
+      onMouseLeave={() => onMouseLeave(node)}
+      onMouseUp={() => onMouseUp(node)}
+    >
+      <strong>{node.isStart ? "S" : node.isGoal ? "G" : ""}</strong>
     </div>
   );
-}
- 
-export default Node;
+};
 
+export default Node;

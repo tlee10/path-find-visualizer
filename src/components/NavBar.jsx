@@ -39,6 +39,7 @@ class NavBar extends Component {
                   return (
                     <button
                       className="dropdown-item"
+                      key={algo}
                       onClick={() => handleAlgoDropdown(algo)}
                     >
                       {algo}

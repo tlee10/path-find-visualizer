@@ -55,7 +55,7 @@ const graphSearch = (graph, ordering) => {
     }
     path = "node(" + current.row + "," + current.col + ")" + path;
   }
-  console.log(path);
+  current.isStart ? console.log(path) : console.log("NO PATH");
 };
 
 const updateDiscoveredNode = (destination, current, weight) => {

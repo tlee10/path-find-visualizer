@@ -1,18 +1,31 @@
 import Node from "./Node";
-import '/Users/tx-10/Desktop/react/path-find-visualizer/src/App.css';
-import React, {Component} from 'react';
+import "/Users/tx-10/Desktop/react/path-find-visualizer/src/App.css";
+import React, { Component } from "react";
 
 class Grid extends Component {
-  render() { 
-    const {grid} = this.props;
+  render() {
+    const {
+      grid,
+      onMouseDown,
+      onMouseEnter,
+      onMouseLeave,
+      onMouseUp
+    } = this.props;
     return (
       <div className="grid">
-        {grid.map((row, rowId) =>{
-          return(
+        {grid.map((row, rowId) => {
+          return (
             <div className="row" key={rowId}>
               {row.map((node, nodeId) => {
                 return (
-                  <Node node={node} key={nodeId}/>
+                  <Node
+                    node={node}
+                    key={nodeId}
+                    onMouseDown={onMouseDown}
+                    onMouseEnter={onMouseEnter}
+                    onMouseLeave={onMouseLeave}
+                    onMouseUp={onMouseUp}
+                  />
                 );
               })}
             </div>
@@ -22,5 +35,5 @@ class Grid extends Component {
     );
   }
 }
- 
+
 export default Grid;
