@@ -4,8 +4,6 @@ import Grid from "./components/Grid";
 import NavBar from "./components/NavBar";
 import Graph from "./Graph";
 import graphSearch from "./algorithms";
-import _ from "lodash";
-import { node } from "prop-types";
 
 const START_NODE_ROW = 12;
 const START_NODE_COL = 15;
@@ -18,16 +16,10 @@ class App extends Component {
     this.state = {
       graph: new Graph(),
       algorithms: [{ name: "bfs" }, { name: "dfs" }],
-      algoChosen: null,
+      algoChosen: "",
       animationActivated: false,
-      isSpecialNode: ""
+      clickAction: ""
     };
-    // this.handleAlgoDropdown = this.handleAlgoDropdown.bind(this);
-    // this.animateSearch = this.animateSearch.bind(this);
-    // this.onMouseDown = this.onMouseDown.bind(this);
-    // this.onMouseEnter = this.onMouseEnter.bind(this);
-    // this.onMouseUp = this.onMouseUp.bind(this);
-    // this.onMouseLeave = this.onMouseLeave.bind(this);
   }
 
   componentDidMount = () => {
@@ -46,91 +38,81 @@ class App extends Component {
 
   //algorithm selection
   handleAlgoDropdown = name => {
-    const { graph } = this.state;
-    graph.resetGraph();
-    graphSearch(graph, name);
-    this.animateSearch();
+    this.setState({algoChosen: name});
   };
 
+  activateSearch = () => {
+    if (this.state.algoChosen !== ""){
+      const graph = this.state.graph;
+      graph.resetGraph();
+      this.setState({ graph });
+      setTimeout(() => {
+        graphSearch(graph, this.state.algoChosen);
+        this.animateSearch();
+      }, 100);
+
+    }
+  }
+
   onMouseDown = node => {
-    //user clicked on start node or goal node
-    if (
-      (node.isGoal && !this.state.animationActivated) ||
-      (node.isStart && !this.state.animationActivated)
-    )
-      this.setState({ isSpecialNode: node.isStart ? "start" : "goal" });
-    ;
+    if (!this.state.animationActivated) {
+      //actions to take depends on what node user clicked on
+      this.setState({ clickAction: node.isStart ? "start" : node.isGoal ? "goal" : "wall"});
+    }
+    const graph = this.state.graph;
+    if (!node.isStart && !node.isGoal) node.isWall = !node.isWall;
+    this.setState({graph}); 
   };
 
   onMouseEnter = node => {
     const graph = this.state.graph;
-    if (this.state.isSpecialNode !== "") {
-      
-      if (this.state.isSpecialNode === "start") {
-        graph.startNode = node;
-        node.isStart = true;
-      } else {
-        graph.goalNode = node;
-        node.isGoal = true;
-      }
-      this.setState({ graph });
-      
+    
+    if (this.state.clickAction === "start") {
+      graph.startNode = node;
+      node.isStart = true;
+    } else if (this.state.clickAction === "goal"){
+      graph.goalNode = node;
+      node.isGoal = true;
     }
+    else if (this.state.clickAction === "wall" && !node.isStart && !node.isGoal) node.isWall = !node.isWall;
+    
+    this.setState({ graph });
+    
   };
 
   onMouseLeave = node => {
     const graph = this.state.graph;
-    if (this.state.isSpecialNode !== "") {
-      
-      if (this.state.isSpecialNode === "start") {
-        node.isStart = false;
-      } else {
-        node.isGoal = false;
-      }
-      this.setState({ graph });
-      
-    }
-  };
-
-  onMouseUp = node => {
-    //mouse up after either start node or goal node is clicked
-    if (this.state.isSpecialNode !== "") this.setState({ isSpecialNode: "" });
+    
+    if (this.state.clickAction === "start")   node.isStart = false;
+    else if (this.state.clickAction === "goal")   node.isGoal = false;
+    this.setState({ graph });
     
   };
 
-  animateSearch = () => {
-    const currentGraph = this.state.graph;
-    //const newGraph = JSON.parse(JSON.stringify(currentGraph));
-    //const newGraph = Flatted.parse(Flatted.stringify(currentGraph));
-    const newGraph = _.cloneDeep(currentGraph);
+  onMouseUp = () => {
+    //mouse up after either start node or goal node is clicked
+    if (this.state.clickAction !== "") this.setState({ clickAction: "" });
+  };
 
-    // currentGraph.closed.forEach((node, iteration) => {
-    //   const newNode = {
-    //     ...node,
-    //     visited: true
-    //   }
-    //   newGraph.nodes[node.row][node.col] = newNode;
-    //   setTimeout(() => {
-    //     this.setState({graph: newGraph});
-    //   }, 1000*iteration);
-    // });
-    for (let i = 0; i < currentGraph.closed.length; i++) {
+  animateSearch = () => {
+    const graph = this.state.graph;
+
+    graph.closed.forEach((node, iteration) => {
       setTimeout(() => {
-        const node = currentGraph.closed[i];
         const newNode = {
           ...node,
           visited: true
         };
-        newGraph.nodes[node.row][node.col] = newNode;
-        this.setState({ graph: newGraph });
-      }, 100 * i);
-    }
+        graph.nodes[node.row][node.col] = newNode;
+        this.setState({ graph });
+      }, 100 * iteration);
+    });
   };
 
   render() {
     return (
       <React.Fragment>
-        <NavBar handleAlgoDropdown={this.handleAlgoDropdown} />
+        <NavBar algoChosen={this.state.algoChosen} handleAlgoDropdown={this.handleAlgoDropdown} activateSearch={this.activateSearch}/>
         <Grid
           grid={this.state.graph.nodes}
           onMouseDown={this.onMouseDown}

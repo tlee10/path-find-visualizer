@@ -13,15 +13,15 @@ const Node = props => {
   } = props;
 
   const isVisited = node.visited ? "visited" : "";
-
+  const isWall = node.isWall ? "wall" : "";
   return (
     <div
       id={`node-${node.row}-${node.col}`}
-      className={`node ${isVisited}`}
+      className={`node ${isVisited} ${isWall}`}
       onMouseDown={() => onMouseDown(node)}
       onMouseEnter={() => onMouseEnter(node)}
       onMouseLeave={() => onMouseLeave(node)}
-      onMouseUp={() => onMouseUp(node)}
+      onMouseUp={() => onMouseUp()}
     >
       <strong>{node.isStart ? "S" : node.isGoal ? "G" : ""}</strong>
     </div>

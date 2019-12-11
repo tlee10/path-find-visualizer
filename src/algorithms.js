@@ -22,22 +22,24 @@ const graphSearch = (graph, ordering) => {
       //different ordering of open list for each algo
       actions.forEach(destination => {
         //destination not in closed list
-        if (!graph.checkClosed(destination)) {
-          switch (ordering) {
-            case "BFS":
-              //console.log("bfs");
-              bfs(current, destination, graph);
-              break;
-            case "DFS":
-              dfs(current, destination, graph);
-              break;
-            //algorithms with weighted graph
-            default:
-              if (ordering === "A*")
-                destination.h = heuristic(destination, goalNode);
-              weightedSearch(current, destination, graph);
+        if (!destination.isWall){
+          if (!graph.checkClosed(destination)) {
+            switch (ordering) {
+              case "BFS":
+                //console.log("bfs");
+                bfs(current, destination, graph);
+                break;
+              case "DFS":
+                dfs(current, destination, graph);
+                break;
+              //algorithms with weighted graph
+              default:
+                if (ordering === "A*")
+                  destination.h = heuristic(destination, goalNode);
+                weightedSearch(current, destination, graph);
+            }
           }
-        }
+        }    
       });
       //algorithms that use priority queue
       if (ordering === "Dijkstra" || ordering === "A*") {

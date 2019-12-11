@@ -3,7 +3,7 @@ import React, { Component } from "react";
 class NavBar extends Component {
   render() {
     const algorithms = ["BFS", "DFS", "Dijkstra", "A*"];
-    const { handleAlgoDropdown } = this.props;
+    const { algoChosen, handleAlgoDropdown, activateSearch } = this.props;
     return (
       <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
         <a className="navbar-brand" href="#">
@@ -47,6 +47,11 @@ class NavBar extends Component {
                   );
                 })}
               </ul>
+              <button
+                className="btn btn-dark"
+                type="button"
+                onClick={() => activateSearch()}
+              >{algoChosen === "" ? "Choose an algorithm" : "Activate " + algoChosen}</button>
             </li>
           </ul>
         </div>
