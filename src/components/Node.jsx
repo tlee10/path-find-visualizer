@@ -14,10 +14,11 @@ const Node = props => {
 
   const isVisited = node.visited ? "visited" : "";
   const isWall = node.isWall ? "wall" : "";
+  const isPath = node.isPath ? "path" : "";
   return (
     <div
       id={`node-${node.row}-${node.col}`}
-      className={`node ${isVisited} ${isWall}`}
+      className={`node ${isVisited} ${isWall} ${isPath}`}
       onMouseDown={() => onMouseDown(node)}
       onMouseEnter={() => onMouseEnter(node)}
       onMouseLeave={() => onMouseLeave(node)}

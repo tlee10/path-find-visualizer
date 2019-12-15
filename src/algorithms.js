@@ -1,4 +1,5 @@
 const graphSearch = (graph, ordering) => {
+  console.log(graph);
   const startNode = graph.startNode;
   const goalNode = graph.goalNode;
   updateDiscoveredNode(startNode, startNode, 0);
@@ -12,8 +13,7 @@ const graphSearch = (graph, ordering) => {
   while (openList.length) {
     current = openList.shift();
     closedList.push(current);
-
-    if (current === goalNode) {
+    if (current.isGoal) {
       reachedGoal = true;
       break;
     } else {
@@ -22,7 +22,7 @@ const graphSearch = (graph, ordering) => {
       //different ordering of open list for each algo
       actions.forEach(destination => {
         //destination not in closed list
-        if (!destination.isWall){
+        if (!destination.isWall) {
           if (!graph.checkClosed(destination)) {
             switch (ordering) {
               case "BFS":
@@ -39,14 +39,14 @@ const graphSearch = (graph, ordering) => {
                 weightedSearch(current, destination, graph);
             }
           }
-        }    
+        }
       });
       //algorithms that use priority queue
-      if (ordering === "Dijkstra" || ordering === "A*") {
+      if (ordering === "Dijkstra" || ordering === "A*")
         openList.sort((a, b) => (a.f < b.f ? -1 : 1));
-      }
     }
   }
+
   let path = "";
   if (reachedGoal) {
     //do something

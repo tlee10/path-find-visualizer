@@ -46,18 +46,23 @@ class Graph {
     return this.closed.includes(node);
   }
 
-  resetGraph(){
-    this.nodes.forEach((node) => {
-      node.parent = null;
-      node.f = 0;
-      node.g = 0;
-      node.h = 0;
-      node.depth = 0;
-      node.visited = false;
+  resetGraph() {
+    this.nodes.forEach(row => {
+      row.forEach((node) => {
+        //console.log(node);
+        node.parent = null;
+        node.f = 0;
+        node.g = 0;
+        node.h = 0;
+        node.depth = 0;
+        node.visited = false;
+        node.isPath = false;
+      }) 
     });
     this.closed = [];
     this.open = [];
   }
+
   
 }
 
