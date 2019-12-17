@@ -1,5 +1,5 @@
 import Node from "./Node";
-import "/Users/tx-10/Desktop/react/path-find-visualizer/src/App.css";
+import "../App.css";
 import React, { Component } from "react";
 
 class Grid extends Component {

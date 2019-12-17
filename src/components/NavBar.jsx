@@ -6,13 +6,29 @@ class NavBar extends Component {
     const {
       algoChosen,
       handleAlgoDropdown,
+      handleNodeFeatureDropdown,
       activateSearch,
       clearWalls,
-      animationActivated
+      clearWeight,
+      animationActivated,
+      addNodeFeature
     } = this.props;
-    const activateBtnColor = algoChosen === "" ? "btn-dark" : animationActivated ? "btn-danger" : "btn-success";
+
+    const activateBtnColor =
+      algoChosen === ""
+        ? "btn-dark"
+        : animationActivated
+        ? "btn-danger"
+        : "btn-success";
     const activateBtnText =
-      algoChosen === "" ? "Choose An Algorithm" : animationActivated ? "Searching" : "Activate " + algoChosen;
+      algoChosen === ""
+        ? "Choose An Algorithm"
+        : animationActivated
+        ? "Searching"
+        : "Activate " + algoChosen;
+    const isWeightedSearch =
+      algoChosen === "Dijkstra" || algoChosen === "A*" ? false : true;
+    const addNodeFeatureBtnTxt = "Add " + addNodeFeature;
     return (
       <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
         <a className="navbar-brand" href="#">
@@ -62,16 +78,58 @@ class NavBar extends Component {
                 onClick={() => activateSearch()}
               >
                 <strong>{activateBtnText}</strong>
-                
-              </button>
-              <button
-                className={`btn btn-dark`}
-                type="button"
-                onClick={() => clearWalls()}
-              >
-                <strong>Clear Walls</strong>
               </button>
             </li>
+            <li className="nav-item dropdown">
+              <button
+                className="btn btn-dark dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <strong>{addNodeFeatureBtnTxt}</strong>
+              </button>
+              <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                <button
+                  className="dropdown-item "
+                  onClick={() => handleNodeFeatureDropdown("Wall")}
+                >
+                  Wall
+                </button>
+                <button
+                  className="dropdown-item "
+                  disabled={isWeightedSearch}
+                  onClick={() => handleNodeFeatureDropdown("Weight 2")}
+                >
+                  Weight 2
+                </button>
+                <button
+                  className="dropdown-item"
+                  disabled={isWeightedSearch}
+                  onClick={() => handleNodeFeatureDropdown("Weight 3")}
+                >
+                  Weight 3
+                </button>
+              </div>
+            </li>
+            <button
+              className={`btn btn-dark`}
+              type="button"
+              onClick={() => clearWalls()}
+            >
+              <strong>Clear Walls</strong>
+            </button>
+            <button
+              className={`btn btn-dark`}
+              disabled={isWeightedSearch}
+              type="button"
+              onClick={() => clearWeight()}
+            >
+              <strong>Clear Weight</strong>
+            </button>
           </ul>
         </div>
       </nav>

@@ -9,7 +9,7 @@ import _ from "lodash";
 const START_NODE_ROW = 12;
 const START_NODE_COL = 15;
 const GOAL_NODE_ROW = 12;
-const GOAL_NODE_COL = 16;
+const GOAL_NODE_COL = 35;
 
 class App extends Component {
   constructor(props) {
@@ -19,7 +19,8 @@ class App extends Component {
       algorithms: [{ name: "bfs" }, { name: "dfs" }],
       algoChosen: "",
       animationActivated: false,
-      clickAction: ""
+      clickAction: "",
+      addNodeFeature: "Wall"
     };
   }
 
@@ -39,7 +40,13 @@ class App extends Component {
 
   //algorithm selection
   handleAlgoDropdown = name => {
-    this.setState({ algoChosen: name });
+    if (name !== "Dijkstra" || name !== "A*")
+      this.setState({ algoChosen: name, addNodeFeature: "Wall" });
+    else this.setState({ algoChosen: name });
+  };
+
+  handleNodeFeatureDropdown = name => {
+    this.setState({ addNodeFeature: name });
   };
 
   copyGraph = state => {
@@ -51,13 +58,28 @@ class App extends Component {
     if (!this.state.animationActivated) {
       //actions to take depends on what node user clicked on
       this.setState({
-        clickAction: node.isStart ? "start" : node.isGoal ? "goal" : "wall"
+        clickAction: node.isStart ? "start" : node.isGoal ? "goal" : "normal"
       });
       //click on non-special nodes will turn them to walls
       const graph = this.copyGraph(this.state);
 
-      if (!node.isStart && !node.isGoal)
-        graph.nodes[node.row][node.col].isWall = !node.isWall;
+      if (!node.isStart && !node.isGoal) {
+        if (
+          this.state.addNodeFeature === "Wall" &&
+          graph.nodes[node.row][node.col].weight === 1
+        )
+          graph.nodes[node.row][node.col].isWall = !node.isWall;
+        else if (
+          this.state.addNodeFeature === "Weight 2" &&
+          !graph.nodes[node.row][node.col].isWall
+        )
+          graph.nodes[node.row][node.col].weight = 2;
+        else if (
+          this.state.addNodeFeature === "Weight 3" &&
+          !graph.nodes[node.row][node.col].isWall
+        )
+          graph.nodes[node.row][node.col].weight = 3;
+      }
       this.setState({ graph });
     }
   };
@@ -67,18 +89,37 @@ class App extends Component {
       this.setState((state, props) => {
         const graph = this.copyGraph(state);
 
-        if (this.state.clickAction === "start") {
+        if (state.clickAction === "start") {
           graph.startNode = graph.nodes[node.row][node.col];
           graph.nodes[node.row][node.col].isStart = true;
-        } else if (this.state.clickAction === "goal") {
+        } else if (state.clickAction === "goal") {
           graph.goalNode = graph.nodes[node.row][node.col];
           graph.nodes[node.row][node.col].isGoal = true;
         } else if (
-          this.state.clickAction === "wall" &&
+          state.clickAction === "normal" &&
           !node.isStart &&
-          !node.isGoal
+          !node.isGoal &&
+          this.state.addNodeFeature === "Wall"
         ) {
           graph.nodes[node.row][node.col].isWall = !node.isWall;
+        } else if (
+          state.clickAction === "normal" &&
+          !node.isStart &&
+          !node.isGoal &&
+          this.state.addNodeFeature === "Weight 2"
+        ) {
+          if (graph.nodes[node.row][node.col].weight !== 2) {
+            graph.nodes[node.row][node.col].weight = 2;
+          } else graph.nodes[node.row][node.col].weight = 1;
+        } else if (
+          state.clickAction === "normal" &&
+          !node.isStart &&
+          !node.isGoal &&
+          this.state.addNodeFeature === "Weight 3"
+        ) {
+          if (graph.nodes[node.row][node.col].weight !== 3) {
+            graph.nodes[node.row][node.col].weight = 3;
+          } else graph.nodes[node.row][node.col].weight = 1;
         }
         return { ...state, graph };
       });
@@ -176,16 +217,31 @@ class App extends Component {
     }
   };
 
+  clearWeight = () => {
+    if (!this.state.animationActivated) {
+      const newGraph = this.copyGraph(this.state);
+      newGraph.nodes.forEach(row => {
+        row.forEach(node => {
+          node.weight = 1;
+        });
+      });
+      this.setState({ graph: newGraph });
+    }
+  };
+
   render() {
     return (
       <React.Fragment>
         <NavBar
           algoChosen={this.state.algoChosen}
           handleAlgoDropdown={this.handleAlgoDropdown}
+          handleNodeFeatureDropdown={this.handleNodeFeatureDropdown}
           activateSearch={this.activateSearch}
           resetGraph={this.resetGraph}
           clearWalls={this.clearWalls}
+          clearWeight={this.clearWeight}
           animationActivated={this.state.animationActivated}
+          addNodeFeature={this.state.addNodeFeature}
         />
         <Grid
           grid={this.state.graph.nodes}

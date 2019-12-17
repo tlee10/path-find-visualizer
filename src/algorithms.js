@@ -112,9 +112,10 @@ const dfs = (current, destination, graph) => {
 //   }
 // }
 
+//dijkstra and A*
 const weightedSearch = (current, destination, graph) => {
   if (!graph.checkOpen(destination)) {
-    updateDiscoveredNode(destination, current, current.weight);
+    updateDiscoveredNode(destination, current, destination.weight);
     graph.open.push(destination);
   } else {
     let cost = current.g + destination.weight;

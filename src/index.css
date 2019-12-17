@@ -20,6 +20,11 @@ code {
   text-align: center;
 }
 
+.dice {
+  height: 100%;
+  width: 100%;
+}
+
 .row {
   margin-top: -1px;
   height: 3.8vh;
@@ -50,15 +55,10 @@ code {
   animation-play-state: running;
 }
 
-.wall {
-  border: 0px;
-  background-color: black;
-}
-
 .path {
-  border: 0.5px solid rgb(255, 251, 7);
+  border: 0.5px solid rgb(255, 230, 7);
   animation-name: pathAnimation;
-  animation-duration: 0.5s;
+  animation-duration: 0.3s;
   animation-timing-function: ease-out;
   animation-delay: 0;
   animation-direction: alternate;
@@ -110,3 +110,9 @@ code {
     background-color: rgba(255, 251, 1, 0.75);
   }
 }
+
+.wall {
+  border: 0px;
+  background-color: rgb(0,0,0);
+}
+

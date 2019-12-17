@@ -48,7 +48,7 @@ class Graph {
 
   resetGraph() {
     this.nodes.forEach(row => {
-      row.forEach((node) => {
+      row.forEach(node => {
         //console.log(node);
         node.parent = null;
         node.f = 0;
@@ -57,13 +57,11 @@ class Graph {
         node.depth = 0;
         node.visited = false;
         node.isPath = false;
-      }) 
+      });
     });
     this.closed = [];
     this.open = [];
   }
-
-  
 }
 
 export default Graph;
