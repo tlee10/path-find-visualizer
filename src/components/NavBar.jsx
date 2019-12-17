@@ -7,11 +7,12 @@ class NavBar extends Component {
       algoChosen,
       handleAlgoDropdown,
       activateSearch,
-      resetGraph
+      clearWalls,
+      animationActivated
     } = this.props;
-    const activateBtnColor = algoChosen === "" ? "btn-dark" : "btn-danger";
+    const activateBtnColor = algoChosen === "" ? "btn-dark" : animationActivated ? "btn-danger" : "btn-success";
     const activateBtnText =
-      algoChosen === "" ? "Choose an algorithm" : "Activate " + algoChosen;
+      algoChosen === "" ? "Choose An Algorithm" : animationActivated ? "Searching" : "Activate " + algoChosen;
     return (
       <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
         <a className="navbar-brand" href="#">
@@ -39,7 +40,7 @@ class NavBar extends Component {
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                Algorithms
+                <strong>Algorithms</strong>
                 <span className="caret"></span>
               </button>
               <ul className="dropdown-menu" aria-labelledby="dropdownMenu2">
@@ -60,14 +61,16 @@ class NavBar extends Component {
                 type="button"
                 onClick={() => activateSearch()}
               >
-                {activateBtnText}
+                <strong>{activateBtnText}</strong>
+                
               </button>
               <button
                 className={`btn btn-dark`}
                 type="button"
-                onClick={() => resetGraph()}
+                onClick={() => clearWalls()}
               >
-                reset</button>
+                <strong>Clear Walls</strong>
+              </button>
             </li>
           </ul>
         </div>

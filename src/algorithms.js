@@ -93,6 +93,10 @@ const bfs = (current, destination, graph) => {
 const dfs = (current, destination, graph) => {
   updateDiscoveredNode(destination, current, 1);
   //deepest node expands first
+  if (graph.checkOpen(destination)) {
+    console.log("yeyeyeye")
+    graph.open.splice(graph.open.indexOf(destination), 1);
+  }
   graph.open.unshift(destination);
 };
 

@@ -13,7 +13,7 @@ const Node = props => {
   } = props;
 
   const isVisited = node.visited ? "visited" : "";
-  const isWall = node.isWall ? "wall" : "";
+  const isWall = node.isVisited ? "" : node.isWall ? "wall" : "";
   const isPath = node.isPath ? "path" : "";
   return (
     <div

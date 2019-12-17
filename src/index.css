@@ -21,7 +21,7 @@ code {
 }
 
 .row {
-  margin-top: -3px;
+  margin-top: -1px;
   height: 3.8vh;
 }
 
@@ -39,6 +39,7 @@ code {
 }
 
 .visited {
+  border: 0.05px solid rgb(189, 189, 189);
   animation-name: visitedAnimation;
   animation-duration: 0.5s;
   animation-timing-function: ease-out;
@@ -55,6 +56,7 @@ code {
 }
 
 .path {
+  border: 0.5px solid rgb(255, 251, 7);
   animation-name: pathAnimation;
   animation-duration: 0.5s;
   animation-timing-function: ease-out;
@@ -84,7 +86,7 @@ code {
   100% {
     transform: scale(1);
     background-color: rgba(0, 190, 218, 0.75);
-  } 
+  }
 }
 
 @keyframes pathAnimation {
