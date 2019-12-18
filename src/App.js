@@ -73,12 +73,16 @@ class App extends Component {
           this.state.addNodeFeature === "Weight 2" &&
           !graph.nodes[node.row][node.col].isWall
         )
+        if (graph.nodes[node.row][node.col].weight !== 2) {
           graph.nodes[node.row][node.col].weight = 2;
+        } else graph.nodes[node.row][node.col].weight = 1;
         else if (
           this.state.addNodeFeature === "Weight 3" &&
           !graph.nodes[node.row][node.col].isWall
         )
-          graph.nodes[node.row][node.col].weight = 3;
+        if (graph.nodes[node.row][node.col].weight !== 2) {
+          graph.nodes[node.row][node.col].weight = 2;
+        } else graph.nodes[node.row][node.col].weight = 1;
       }
       this.setState({ graph });
     }
