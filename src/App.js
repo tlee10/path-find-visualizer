@@ -81,7 +81,7 @@ class App extends Component {
           !graph.nodes[node.row][node.col].isWall
         )
         if (graph.nodes[node.row][node.col].weight !== 2) {
-          graph.nodes[node.row][node.col].weight = 2;
+          graph.nodes[node.row][node.col].weight = 3;
         } else graph.nodes[node.row][node.col].weight = 1;
       }
       this.setState({ graph });
