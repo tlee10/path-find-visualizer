@@ -14,7 +14,7 @@ const Node = props => {
   const isVisited = node.visited ? "visited" : "";
   const isPath = node.isPath ? "path" : "";
   const isWall = node.isVisited ? "" : node.isWall ? "wall" : "";
-  const isWeighted = node.weight === 2 ? "weight2" : node.weight === 3 ? "weight3" : "";
+  const isWeighted = node.weight === 3 ? "weight3" : node.weight === 5 ? "weight5" : "";
 
   return (
     <div

@@ -70,18 +70,18 @@ class App extends Component {
         )
           graph.nodes[node.row][node.col].isWall = !node.isWall;
         else if (
-          this.state.addNodeFeature === "Weight 2" &&
-          !graph.nodes[node.row][node.col].isWall
-        )
-        if (graph.nodes[node.row][node.col].weight !== 2) {
-          graph.nodes[node.row][node.col].weight = 2;
-        } else graph.nodes[node.row][node.col].weight = 1;
-        else if (
           this.state.addNodeFeature === "Weight 3" &&
           !graph.nodes[node.row][node.col].isWall
         )
-        if (graph.nodes[node.row][node.col].weight !== 2) {
+        if (graph.nodes[node.row][node.col].weight !== 3) {
           graph.nodes[node.row][node.col].weight = 3;
+        } else graph.nodes[node.row][node.col].weight = 1;
+        else if (
+          this.state.addNodeFeature === "Weight 5" &&
+          !graph.nodes[node.row][node.col].isWall
+        )
+        if (graph.nodes[node.row][node.col].weight !== 5) {
+          graph.nodes[node.row][node.col].weight = 5;
         } else graph.nodes[node.row][node.col].weight = 1;
       }
       this.setState({ graph });
@@ -111,21 +111,21 @@ class App extends Component {
           state.clickAction === "normal" &&
           !node.isStart &&
           !node.isGoal &&
-          this.state.addNodeFeature === "Weight 2" &&
-          !graph.nodes[node.row][node.col].isWall
-        ) {
-          if (graph.nodes[node.row][node.col].weight !== 2) {
-            graph.nodes[node.row][node.col].weight = 2;
-          } else graph.nodes[node.row][node.col].weight = 1;
-        } else if (
-          state.clickAction === "normal" &&
-          !node.isStart &&
-          !node.isGoal &&
           this.state.addNodeFeature === "Weight 3" &&
           !graph.nodes[node.row][node.col].isWall
         ) {
           if (graph.nodes[node.row][node.col].weight !== 3) {
             graph.nodes[node.row][node.col].weight = 3;
+          } else graph.nodes[node.row][node.col].weight = 1;
+        } else if (
+          state.clickAction === "normal" &&
+          !node.isStart &&
+          !node.isGoal &&
+          this.state.addNodeFeature === "Weight 5" &&
+          !graph.nodes[node.row][node.col].isWall
+        ) {
+          if (graph.nodes[node.row][node.col].weight !== 5) {
+            graph.nodes[node.row][node.col].weight = 5;
           } else graph.nodes[node.row][node.col].weight = 1;
         }
         return { ...state, graph };

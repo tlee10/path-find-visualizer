@@ -32,6 +32,9 @@ const graphSearch = (graph, ordering) => {
               case "DFS":
                 dfs(current, destination, graph);
                 break;
+              case "Greedy Best-First Search":
+                destination.h = heuristic(destination, goalNode);
+                bestFirstSearch(current, destination, graph);
               //algorithms with weighted graph
               default:
                 if (ordering === "A*")
@@ -42,7 +45,7 @@ const graphSearch = (graph, ordering) => {
         }
       });
       //algorithms that use priority queue
-      if (ordering === "Dijkstra" || ordering === "A*")
+      if (ordering === "Dijkstra" || ordering === "A*" || ordering === "Greedy Best-First Search")
         openList.sort((a, b) => (a.f < b.f ? -1 : 1));
     }
   }
@@ -112,6 +115,18 @@ const dfs = (current, destination, graph) => {
 //   }
 // }
 
+const bestFirstSearch = (current, destination, graph) => {
+  if (!graph.checkOpen(destination)) {
+    updateDiscoveredNode(destination, current, 0);
+    graph.open.push(destination);
+  } else {
+    let cost = current.g + destination.weight;
+    if (cost + destination.h <= destination.f) {
+      updateDiscoveredNode(destination, current, 0);
+    }
+  }
+}
+
 //dijkstra and A*
 const weightedSearch = (current, destination, graph) => {
   if (!graph.checkOpen(destination)) {
@@ -119,7 +134,7 @@ const weightedSearch = (current, destination, graph) => {
     graph.open.push(destination);
   } else {
     let cost = current.g + destination.weight;
-    if (cost + destination.h < destination.f) {
+    if (cost + destination.h <= destination.f) {
       updateDiscoveredNode(destination, current, destination.weight);
     }
   }

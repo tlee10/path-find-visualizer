@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 class NavBar extends Component {
   render() {
-    const algorithms = ["BFS", "DFS", "Dijkstra", "A*"];
+    const algorithms = ["BFS", "DFS", "Dijkstra", "Greedy Best-First Search", "A*"];
     const {
       algoChosen,
       handleAlgoDropdown,
@@ -67,7 +67,7 @@ class NavBar extends Component {
                       key={algo}
                       onClick={() => handleAlgoDropdown(algo)}
                     >
-                      {algo}
+                      {algo === "Dijkstra" || algo === "A*" ? algo + "  (Weighted)" : algo}
                     </button>
                   );
                 })}
@@ -102,16 +102,16 @@ class NavBar extends Component {
                 <button
                   className="dropdown-item "
                   disabled={isWeightedSearch}
-                  onClick={() => handleNodeFeatureDropdown("Weight 2")}
+                  onClick={() => handleNodeFeatureDropdown("Weight 3")}
                 >
-                  Weight 2
+                  Weight 3
                 </button>
                 <button
                   className="dropdown-item"
                   disabled={isWeightedSearch}
-                  onClick={() => handleNodeFeatureDropdown("Weight 3")}
+                  onClick={() => handleNodeFeatureDropdown("Weight 5")}
                 >
-                  Weight 3
+                  Weight 5
                 </button>
               </div>
             </li>

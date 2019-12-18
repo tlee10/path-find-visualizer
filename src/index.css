@@ -20,14 +20,14 @@ code {
   text-align: center;
 }
 
-.weight2 {
-  background-image: url("./dice_2.png");
+.weight3 {
+  background-image: url("./dice_3.png");
   background-size: 100% 100%;
 
 }
 
-.weight3 {
-  background-image: url("./dice_3.png");
+.weight5 {
+  background-image: url("./dice_5.png");
   background-size: 100% 100%;
 }
 
