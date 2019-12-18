@@ -1,5 +1,4 @@
 import Node from "./Node";
-import "../App.css";
 import React, { Component } from "react";
 
 class Grid extends Component {

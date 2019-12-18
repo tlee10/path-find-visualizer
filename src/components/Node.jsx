@@ -1,6 +1,3 @@
-import "../App.css";
-//import "../styles/dice_2.png";
-//import "../styles/dice_3.png";
 import React from "react";
 
 const Node = props => {
@@ -17,18 +14,19 @@ const Node = props => {
   const isVisited = node.visited ? "visited" : "";
   const isPath = node.isPath ? "path" : "";
   const isWall = node.isVisited ? "" : node.isWall ? "wall" : "";
+  const isWeighted = node.weight === 2 ? "weight2" : node.weight === 3 ? "weight3" : "";
 
   return (
     <div
       id={`node-${node.row}-${node.col}`}
-      className={`node ${isVisited} ${isPath} ${isWall}`}
+      className={`node ${isVisited} ${isPath} ${isWall} ${isWeighted}`}
       onMouseDown={() => onMouseDown(node)}
       onMouseEnter={() => onMouseEnter(node)}
       onMouseLeave={() => onMouseLeave(node)}
       onMouseUp={() => onMouseUp()}
     >
       <strong>{node.isStart ? "S" : node.isGoal ? "G" : ""}</strong>
-      {node.weight === 2 ? <img className="dice" src="../../public/dice_2.png" unselectable="on"/> : node.weight === 3 ? <img className="dice" src="../../public/dice_3.png" unselectable="on"/> : ""}
+      {/* {node.weight === 2 ? <img className="dice" src="dice_2.png" unselectable="on"/> : node.weight === 3 ? <img className="dice" src="dice_3.png" unselectable="on"/> : ""} */}
       
 
     </div>

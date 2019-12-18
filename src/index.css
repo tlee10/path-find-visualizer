@@ -20,9 +20,15 @@ code {
   text-align: center;
 }
 
-.dice {
-  height: 100%;
-  width: 100%;
+.weight2 {
+  background-image: url("./dice_2.png");
+  background-size: 100% 100%;
+
+}
+
+.weight3 {
+  background-image: url("./dice_3.png");
+  background-size: 100% 100%;
 }
 
 .row {
