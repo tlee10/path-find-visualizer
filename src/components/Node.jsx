@@ -28,7 +28,7 @@ const Node = props => {
       onMouseUp={() => onMouseUp()}
     >
       <strong>{node.isStart ? "S" : node.isGoal ? "G" : ""}</strong>
-      {node.weight === 2 ? <img className="dice" src="../../dice_2.png" unselectable="on"/> : node.weight === 3 ? <img className="dice" src="../../dice_3.png" unselectable="on"/> : ""}
+      {node.weight === 2 ? <img className="dice" src="../../public/dice_2.png" unselectable="on"/> : node.weight === 3 ? <img className="dice" src="../../public/dice_3.png" unselectable="on"/> : ""}
       
 
     </div>
