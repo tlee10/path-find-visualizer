@@ -99,14 +99,16 @@ class App extends Component {
           state.clickAction === "normal" &&
           !node.isStart &&
           !node.isGoal &&
-          this.state.addNodeFeature === "Wall"
+          this.state.addNodeFeature === "Wall" &&
+          graph.nodes[node.row][node.col].weight === 1
         ) {
           graph.nodes[node.row][node.col].isWall = !node.isWall;
         } else if (
           state.clickAction === "normal" &&
           !node.isStart &&
           !node.isGoal &&
-          this.state.addNodeFeature === "Weight 2"
+          this.state.addNodeFeature === "Weight 2" &&
+          !graph.nodes[node.row][node.col].isWall
         ) {
           if (graph.nodes[node.row][node.col].weight !== 2) {
             graph.nodes[node.row][node.col].weight = 2;
@@ -115,7 +117,8 @@ class App extends Component {
           state.clickAction === "normal" &&
           !node.isStart &&
           !node.isGoal &&
-          this.state.addNodeFeature === "Weight 3"
+          this.state.addNodeFeature === "Weight 3" &&
+          !graph.nodes[node.row][node.col].isWall
         ) {
           if (graph.nodes[node.row][node.col].weight !== 3) {
             graph.nodes[node.row][node.col].weight = 3;
