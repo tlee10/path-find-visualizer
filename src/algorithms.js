@@ -1,5 +1,4 @@
 const graphSearch = (graph, ordering) => {
-  console.log(graph);
   const startNode = graph.startNode;
   const goalNode = graph.goalNode;
   updateDiscoveredNode(startNode, startNode, 0);
@@ -26,7 +25,6 @@ const graphSearch = (graph, ordering) => {
           if (!graph.checkClosed(destination)) {
             switch (ordering) {
               case "BFS":
-                //console.log("bfs");
                 bfs(current, destination, graph);
                 break;
               case "DFS":
@@ -50,17 +48,17 @@ const graphSearch = (graph, ordering) => {
     }
   }
 
-  let path = "";
-  if (reachedGoal) {
-    //do something
-    current = goalNode;
-    while (current.parent !== current) {
-      path = "-node(" + current.row + "," + current.col + ")" + path;
-      current = current.parent;
-    }
-    path = "node(" + current.row + "," + current.col + ")" + path;
-  }
-  current.isStart ? console.log(path) : console.log("NO PATH");
+  // let path = "";
+  // if (reachedGoal) {
+  //   //do something
+  //   current = goalNode;
+  //   while (current.parent !== current) {
+  //     path = "-node(" + current.row + "," + current.col + ")" + path;
+  //     current = current.parent;
+  //   }
+  //   path = "node(" + current.row + "," + current.col + ")" + path;
+  // }
+  // current.isStart ? console.log(path) : console.log("NO PATH");
 };
 
 const updateDiscoveredNode = (destination, current, weight) => {
@@ -97,7 +95,6 @@ const dfs = (current, destination, graph) => {
   updateDiscoveredNode(destination, current, 1);
   //deepest node expands first
   if (graph.checkOpen(destination)) {
-    console.log("yeyeyeye")
     graph.open.splice(graph.open.indexOf(destination), 1);
   }
   graph.open.unshift(destination);
