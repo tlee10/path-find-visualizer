@@ -122,3 +122,16 @@ code {
   background-color: rgb(0,0,0);
 }
 
+.contextMenu {
+  position: absolute;
+  background: white;
+  box-shadow: 0px 2px 10px #999999;
+  padding: 5px 10px 5px 10px;
+  font-size: 14px;
+  visibility: hidden;
+}
+
+.contextMenu .visible {
+  visibility: visible;
+}
+

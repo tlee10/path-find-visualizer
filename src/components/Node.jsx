@@ -8,7 +8,8 @@ const Node = props => {
     onMouseDown,
     onMouseEnter,
     onMouseLeave,
-    onMouseUp
+    onMouseUp,
+    onContextMenu
   } = props;
 
   const isVisited = node.visited ? "visited" : "";
@@ -20,10 +21,11 @@ const Node = props => {
     <div
       id={`node-${node.row}-${node.col}`}
       className={`node ${isVisited} ${isPath} ${isWall} ${isWeighted}`}
-      onMouseDown={() => onMouseDown(node)}
+      onMouseDown={(e) => onMouseDown(e, node)}
       onMouseEnter={() => onMouseEnter(node)}
       onMouseLeave={() => onMouseLeave(node)}
       onMouseUp={() => onMouseUp()}
+      onContextMenu={(e) => onContextMenu(e, node)}
     >
       <strong>{node.isStart ? "S" : node.isGoal ? "G" : ""}</strong>
       {/* {node.weight === 2 ? <img className="dice" src="dice_2.png" unselectable="on"/> : node.weight === 3 ? <img className="dice" src="dice_3.png" unselectable="on"/> : ""} */}

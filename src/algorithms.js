@@ -43,8 +43,10 @@ const graphSearch = (graph, ordering) => {
         }
       });
       //algorithms that use priority queue
-      if (ordering === "Dijkstra" || ordering === "A*" || ordering === "Greedy Best-First Search")
+      if (ordering === "Dijkstra" || ordering === "A*")
         openList.sort((a, b) => (a.f < b.f ? -1 : 1));
+      else if (ordering === "Greedy Best-First Search")
+        openList.sort((a, b) => (a.h < b.h ? -1 : 1));
     }
   }
 
@@ -114,15 +116,15 @@ const dfs = (current, destination, graph) => {
 
 const bestFirstSearch = (current, destination, graph) => {
   if (!graph.checkOpen(destination)) {
-    updateDiscoveredNode(destination, current, 0);
+    updateDiscoveredNode(destination, current, destination.weight);
     graph.open.push(destination);
   } else {
     let cost = current.g + destination.weight;
     if (cost + destination.h <= destination.f) {
-      updateDiscoveredNode(destination, current, 0);
+      updateDiscoveredNode(destination, current, destination.weight);
     }
   }
-}
+};
 
 //dijkstra and A*
 const weightedSearch = (current, destination, graph) => {

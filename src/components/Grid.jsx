@@ -8,7 +8,8 @@ class Grid extends Component {
       onMouseDown,
       onMouseEnter,
       onMouseLeave,
-      onMouseUp
+      onMouseUp,
+      onContextMenu
     } = this.props;
     return (
       <div className="grid">
@@ -24,6 +25,7 @@ class Grid extends Component {
                     onMouseEnter={onMouseEnter}
                     onMouseLeave={onMouseLeave}
                     onMouseUp={onMouseUp}
+                    onContextMenu={onContextMenu}
                   />
                 );
               })}

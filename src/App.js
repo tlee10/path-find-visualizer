@@ -5,6 +5,7 @@ import NavBar from "./components/NavBar";
 import Graph from "./Graph";
 import graphSearch from "./algorithms";
 import _ from "lodash";
+import ContextMenu from "./components/ContextMenu";
 
 const START_NODE_ROW = 12;
 const START_NODE_COL = 15;
@@ -16,11 +17,12 @@ class App extends Component {
     super(props);
     this.state = {
       graph: new Graph(),
-      algorithms: [{ name: "bfs" }, { name: "dfs" }],
-      algoChosen: "",
-      animationActivated: false,
-      clickAction: "",
-      addNodeFeature: "Wall"
+      algoChosen: "", //which algorithm to run
+      animationActivated: false, //can't add feature or activate search when animation is going on
+      clickAction: "", //click on special or normal nodes
+      addNodeFeature: "Wall", //current feature option
+      visible: false, //for context menu
+      contextMenuNode: null
     };
   }
 
@@ -54,8 +56,12 @@ class App extends Component {
     return graph;
   };
 
-  onMouseDown = node => {
-    if (!this.state.animationActivated) {
+  onMouseDown = (e, node) => {
+    if (
+      !this.state.animationActivated &&
+      e.button === 0 &&
+      !this.state.visible
+    ) {
       //actions to take depends on what node user clicked on
       this.setState({
         clickAction: node.isStart ? "start" : node.isGoal ? "goal" : "normal"
@@ -73,18 +79,21 @@ class App extends Component {
           this.state.addNodeFeature === "Weight 3" &&
           !graph.nodes[node.row][node.col].isWall
         )
-        if (graph.nodes[node.row][node.col].weight !== 3) {
-          graph.nodes[node.row][node.col].weight = 3;
-        } else graph.nodes[node.row][node.col].weight = 1;
+          if (graph.nodes[node.row][node.col].weight !== 3) {
+            graph.nodes[node.row][node.col].weight = 3;
+          } else graph.nodes[node.row][node.col].weight = 1;
         else if (
           this.state.addNodeFeature === "Weight 5" &&
           !graph.nodes[node.row][node.col].isWall
         )
-        if (graph.nodes[node.row][node.col].weight !== 5) {
-          graph.nodes[node.row][node.col].weight = 5;
-        } else graph.nodes[node.row][node.col].weight = 1;
+          if (graph.nodes[node.row][node.col].weight !== 5) {
+            graph.nodes[node.row][node.col].weight = 5;
+          } else graph.nodes[node.row][node.col].weight = 1;
       }
       this.setState({ graph });
+    } else if (this.state.visible) {
+      if (!e.target.classList.contains("contextMenu"))
+        this.setState({ visible: false, contextMenuNode: null });
     }
   };
 
@@ -152,6 +161,40 @@ class App extends Component {
     if (this.state.clickAction !== "") this.setState({ clickAction: "" });
   };
 
+  onContextMenu = (e, node) => {
+    e.preventDefault();
+    const contextMenu = document.getElementsByClassName("contextMenu");
+    const clickX = e.clientX;
+    const clickY = e.clientY;
+    const screenW = window.innerWidth;
+    const screenH = window.innerHeight;
+    const rootW = contextMenu[0].offsetWidth;
+    const rootH = contextMenu[0].offsetHeight;
+
+    const right = screenW - clickX > rootW;
+    const left = !right;
+    const top = screenH - clickY > rootH;
+    const bottom = !top;
+
+    if (right) {
+      contextMenu[0].style.left = `${clickX + 5}px`;
+    }
+
+    if (left) {
+      contextMenu[0].style.left = `${clickX - rootW - 5}px`;
+    }
+
+    if (top) {
+      contextMenu[0].style.top = `${clickY + 5}px`;
+    }
+
+    if (bottom) {
+      contextMenu[0].style.top = `${clickY - rootH - 5}px`;
+    }
+
+    this.setState({ visible: true, contextMenuNode: node });
+  };
+
   activateSearch = () => {
     if (this.state.algoChosen !== "" && !this.state.animationActivated) {
       this.setState((state, props) => {
@@ -192,7 +235,7 @@ class App extends Component {
       current = current.parent;
     }
     path.unshift({ row: current.row, col: current.col });
-    
+
     if (current.parent === current) {
       path.forEach((coordinates, iteration) => {
         i = iteration;
@@ -204,7 +247,6 @@ class App extends Component {
           });
         }, 50 * iteration);
       });
-      
     }
     setTimeout(() => {
       this.setState({ animationActivated: false });
@@ -255,6 +297,11 @@ class App extends Component {
           onMouseEnter={this.onMouseEnter}
           onMouseLeave={this.onMouseLeave}
           onMouseUp={this.onMouseUp}
+          onContextMenu={this.onContextMenu}
+        />
+        <ContextMenu
+          visible={this.state.visible}
+          contextMenuNode={this.state.contextMenuNode}
         />
       </React.Fragment>
     );
