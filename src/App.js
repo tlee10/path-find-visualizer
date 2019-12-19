@@ -177,10 +177,9 @@ class App extends Component {
           graph.nodes[node.row][node.col].visited = true;
           return { graph };
         });
-      }, 100 * iteration);
+      }, 50 * iteration);
     });
-    console.log(i);
-    setTimeout(() => this.animatePath(), 100 * (i + 1));
+    setTimeout(() => this.animatePath(), 50 * (i + 1));
   };
 
   animatePath = () => {
@@ -193,8 +192,7 @@ class App extends Component {
       current = current.parent;
     }
     path.unshift({ row: current.row, col: current.col });
-    console.log("coordinates");
-    console.log(path);
+    
     if (current.parent === current) {
       path.forEach((coordinates, iteration) => {
         i = iteration;
@@ -204,13 +202,13 @@ class App extends Component {
             newGraph.nodes[coordinates.row][coordinates.col].isPath = true;
             return { graph: newGraph };
           });
-        }, 100 * iteration);
+        }, 50 * iteration);
       });
       
     }
     setTimeout(() => {
       this.setState({ animationActivated: false });
-    }, 100 * i);
+    }, 50 * i);
   };
 
   clearWalls = () => {
