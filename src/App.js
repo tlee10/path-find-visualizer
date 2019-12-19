@@ -206,10 +206,11 @@ class App extends Component {
           });
         }, 100 * iteration);
       });
-      setTimeout(() => {
-        this.setState({ animationActivated: false });
-      }, 100 * i);
+      
     }
+    setTimeout(() => {
+      this.setState({ animationActivated: false });
+    }, 100 * i);
   };
 
   clearWalls = () => {
