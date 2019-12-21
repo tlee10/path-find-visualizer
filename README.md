@@ -27,6 +27,8 @@ You can add walls(default) or weights(only works with weighted algo) to the grap
 
 ### `Animate away!!`
 
+![animation gif](animation.gif)
+
 Enjoy the animation and observe how each algorithm works
 
 
