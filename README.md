@@ -7,7 +7,7 @@ Check out the visualizer ---> [path-find-visualizer](https://tlee10.github.io/pa
 ![move special nodes gif](movespecialnodes.gif)
 
 Drag either of the special nodes to the position of your liking
-\n
+
 
 ### `Choose feature to add to the graph`
 
