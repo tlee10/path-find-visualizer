@@ -24,9 +24,12 @@ You can add walls(default) or weights(only works with weighted algo) to the grap
 
 `Right click` at any node that you want to check out the details of that node.
 
+
 ### `Animate away!!`
 
 Enjoy the animation and observe how each algorithm works
+
+
 
 **Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
