@@ -1,33 +1,24 @@
-Check out the visualizer [path-find-Visualizer](https://tlee10.github.io/path-find-visualizer).
+Check out the visualizer ---> [path-find-visualizer](https://tlee10.github.io/path-find-visualizer).
 
 ## Available Features
 
-In the project directory, you can run:
+### `Move Start/Goal node`
 
-### `npm start`
+![alt text](url)
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Drag either of the special nodes to the position of your liking
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+### `Choose feature to add to the graph`
 
-### `npm test`
+You can add walls(default) or weights(only works with weighted algo) to the graph. Watch how these features affect the result obtained
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### `Learn about any node's information`
 
-### `npm run build`
+`Right click` at any node that you want to check out the details of that node
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### `Animate away!!`
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
+Enjoy the animation and observe how each algorithm works
 
 **Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
