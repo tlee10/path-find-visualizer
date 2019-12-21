@@ -4,7 +4,7 @@ Check out the visualizer ---> [path-find-visualizer](https://tlee10.github.io/pa
 
 ### `Move Start/Goal node`
 
-![move special nodes gif](movespecialnode.gif)
+![move special nodes gif](movespecialnodes.gif)
 
 Drag either of the special nodes to the position of your liking
 
