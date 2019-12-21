@@ -30,41 +30,42 @@ You can add walls(default) or weights(only works with weighted algo) to the grap
 Enjoy the animation and observe how each algorithm works
 
 
+## Uninformed Search
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+All search strategies that fall under this category have no additional information other than what's given in the problem definition. This category of search expands nodes without any knowledge of its domain.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+###`Breadth First Search`
+This algorithm expands the **shallowest unexpanded node**(the first node in open list). The open list is implemented using a FIFO queue. 
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Optimal solution will be obtained in a unweighted graph.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+###`Depth First Search`
+This algorithm expands the **deepest unexpanded node**(the last node in open list). The open list is implemented using a LIFO queue.
 
-## Learn More
+This algorithm is not optimal.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+###`Dijkstra`
+This algorithm expands node that has the **lowest cost accumulated** among all nodes in the open list. The open list is implimented using a priority queue.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Used in a weighted graph.
 
-### Code Splitting
+Optimal solution will be obtained if goal test is tested at expansion rather than generation.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+## Informed Search
 
-### Analyzing the Bundle Size
+All search strategies that fall under this category expand nodes based on an evaluation function(f(n)). The evaluation function is construed as a cost estimate. The node that has the **lowest** evaluation is expanded first.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+In this project, `Manhattan Distance` is used as the heuristic function (h(n)) by all informed search strategies. Manhattan Distance calculates the total distance between 2 nodes in both x and y axis of a plane.
 
-### Making a Progressive Web App
+###`Greedy Best First Search`
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+This algorithm is greedy because it expands the node that is estimated to be the closest to the goal by the heuristic function. `f(n) = h(n)`
 
-### Advanced Configuration
+This algorithm is not optimal.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+###`A*`
 
-### Deployment
+This algorithm uses an evaluation function that combines the cost accumulated and future cost to reach the goal to order the nodes in the open list. `f(n) = g(n) + h(n)` where g(n) = cost accumulated.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+This algorithm is optimal and is used in a weighted graph.
 
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
