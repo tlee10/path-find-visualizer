@@ -12,6 +12,11 @@ code {
     monospace;
 }
 
+strong {
+  user-select: none;
+  -moz-user-select: none;
+}
+
 .node {
   background: #fff;
   border: 1px solid yellow;
