@@ -6,7 +6,7 @@ Check out the visualizer ---> [path-find-visualizer](https://tlee10.github.io/pa
 
 ![move special nodes gif](movespecialnodes.gif)
 
-Drag either of the special nodes to the position of your liking
+Drag either of the special nodes to the position of your liking.
 
 
 ### `Choose feature to add to the graph`
@@ -15,14 +15,14 @@ Drag either of the special nodes to the position of your liking
 
 ![add walls gif](addwalls.gif)
 
-You can add walls(default) or weights(only works with weighted algo) to the graph. Watch how these features affect the result obtained
+You can add walls(default) or weights(only works with weighted algo) to the graph. Watch how these features affect the result obtained.
 
 
 ### `Learn about any node's information`
 
 ![right click gif](rightclick.gif)
 
-`Right click` at any node that you want to check out the details of that node
+`Right click` at any node that you want to check out the details of that node.
 
 ### `Animate away!!`
 
