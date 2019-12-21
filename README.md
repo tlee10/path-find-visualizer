@@ -1,6 +1,6 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Check out the visualizer [path-find-Visualizer](https://tlee10.github.io/path-find-visualizer).
 
-## Available Scripts
+## Available Features
 
 In the project directory, you can run:
 
