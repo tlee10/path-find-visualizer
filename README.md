@@ -4,23 +4,23 @@ Check out the visualizer ---> [path-find-visualizer](https://tlee10.github.io/pa
 
 ### `Move Start/Goal node`
 
-![move special nodes gif](move special node.gif)
+![move special nodes gif](movespecialnode.gif)
 
 Drag either of the special nodes to the position of your liking
 
 
 ### `Choose feature to add to the graph`
 
-![choose feature gif](choose feature.gif)
+![choose feature gif](choosefeature.gif)
 
-![add walls gif](add walls.gif)
+![add walls gif](addwalls.gif)
 
 You can add walls(default) or weights(only works with weighted algo) to the graph. Watch how these features affect the result obtained
 
 
 ### `Learn about any node's information`
 
-![right click gif](right click.gif)
+![right click gif](rightclick.gif)
 
 `Right click` at any node that you want to check out the details of that node
 
