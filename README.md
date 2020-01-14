@@ -22,7 +22,7 @@ You can add walls(default) or weights(only works with weighted algo) to the grap
 
 ![right click gif](rightclick.gif)
 
-`Right click` at any node that you want to check out the details of that node.
+`Right click` at any node that you want to check out its details.
 
 
 ### `Animate away!!`
@@ -55,9 +55,9 @@ Optimal solution will be obtained if goal test is tested at expansion rather tha
 
 ## Informed Search
 
-All search strategies that fall under this category expand nodes based on an evaluation function(f(n)). The evaluation function is construed as a cost estimate. The node that has the **lowest** evaluation is expanded first.
+All search strategies that fall under this category expand nodes based on an evaluation function `f(n)`. The evaluation function is construed as a cost estimate. The node that has the **lowest** evaluation is expanded first.
 
-In this project, `Manhattan Distance` is used as the heuristic function (h(n)) by all informed search strategies. Manhattan Distance calculates the total distance between 2 nodes in both x and y axis of a plane.
+In this project, `Manhattan Distance` is used as the heuristic function `h(n)` by all informed search strategies. Manhattan Distance calculates the total distance between 2 nodes in both x and y axis of a plane.
 
 ### `Greedy Best First Search`
 
