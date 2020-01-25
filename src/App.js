@@ -22,7 +22,9 @@ class App extends Component {
       clickAction: "", //click on special or normal nodes
       addNodeFeature: "Wall", //current feature option
       visible: false, //for context menu
-      contextMenuNode: null
+      contextMenuNode: null,
+      animated: false,
+      instantAnimation: false
     };
   }
 
@@ -69,6 +71,12 @@ class App extends Component {
       //click on non-special nodes will turn them to walls
       const graph = this.copyGraph(this.state);
 
+      if ((node.isStart || node.isGoal) && this.state.animated) {
+        this.setState({ instantAnimation: true });
+        // console.log(this.state.instantAnimation);
+        // console.log(this.state.animated);
+      }
+
       if (!node.isStart && !node.isGoal) {
         if (
           this.state.addNodeFeature === "Wall" &&
@@ -101,13 +109,15 @@ class App extends Component {
     if (this.state.clickAction !== "") {
       this.setState((state, props) => {
         const graph = this.copyGraph(state);
-
+        let instantAnimation = false;
         if (state.clickAction === "start") {
           graph.startNode = graph.nodes[node.row][node.col];
           graph.nodes[node.row][node.col].isStart = true;
+          instantAnimation = true;
         } else if (state.clickAction === "goal") {
           graph.goalNode = graph.nodes[node.row][node.col];
           graph.nodes[node.row][node.col].isGoal = true;
+          instantAnimation = true;
         } else if (
           state.clickAction === "normal" &&
           !node.isStart &&
@@ -137,8 +147,16 @@ class App extends Component {
             graph.nodes[node.row][node.col].weight = 5;
           } else graph.nodes[node.row][node.col].weight = 1;
         }
-        return { ...state, graph };
+        return { ...state, graph, instantAnimation };
       });
+
+      if (
+        (this.state.clickAction === "start" ||
+          this.state.clickAction === "goal") &&
+        this.state.instantAnimation
+      ) {
+        this.activateSearch();
+      }
     }
   };
 
@@ -151,13 +169,13 @@ class App extends Component {
           graph.nodes[node.row][node.col].isStart = false;
         else if (this.state.clickAction === "goal")
           graph.nodes[node.row][node.col].isGoal = false;
+
         return { ...state, graph };
       });
     }
   };
 
   onMouseUp = () => {
-    //mouse up after either start node or goal node is clicked
     if (this.state.clickAction !== "") this.setState({ clickAction: "" });
   };
 
@@ -196,61 +214,93 @@ class App extends Component {
   };
 
   activateSearch = () => {
+    console.log("s");
     if (this.state.algoChosen !== "" && !this.state.animationActivated) {
       this.setState((state, props) => {
         const graph = this.copyGraph(state);
         graph.resetGraph();
         graphSearch(graph, state.algoChosen);
-        //graph.closed.forEach((node) => {node.visited = true;});
-        return { graph, animationActivated: true };
+        return { graph, animationActivated: true, animated: true };
       });
-      setTimeout(() => this.animateSearch(), 100);
+      if (this.state.instantAnimation) this.animateSearch();
+      else setTimeout(() => this.animateSearch(), 100);
     }
   };
 
   //animate path searching by changing 'visited' property of nodes in closed list to true
   animateSearch = () => {
-    const oldGraph = this.state.graph;
-    let i;
-    oldGraph.closed.forEach((node, iteration) => {
-      i = iteration;
-      setTimeout(() => {
-        this.setState((state, props) => {
-          const graph = this.copyGraph(state);
-          graph.nodes[node.row][node.col].visited = true;
-          return { graph };
-        });
-      }, 50 * iteration);
+    this.setState(prevstate => {
+      const oldGraph = prevstate.graph;
+      let i;
+      oldGraph.closed.forEach((node, iteration) => {
+        i = iteration;
+        if (this.state.instantAnimation) {
+          this.setState((state, props) => {
+            //console.log(state.graph);
+            const graph = this.copyGraph(state);
+            graph.nodes[node.row][node.col].instantVisited = true;
+            return { graph };
+          });
+        } else {
+          setTimeout(() => {
+            this.setState((state, props) => {
+              const graph = this.copyGraph(state);
+              graph.nodes[node.row][node.col].visited = true;
+              return { graph };
+            });
+          }, 50 * iteration);
+        }
+      });
+      if (this.state.instantAnimation) this.animatePath();
+      else setTimeout(() => this.animatePath(), 50 * (i + 1));
     });
-    setTimeout(() => this.animatePath(), 50 * (i + 1));
   };
 
   animatePath = () => {
-    let current = this.state.graph.goalNode;
-    const path = [];
-    let i;
-    //if node's parent is not itself and there's a path
-    while (current.parent !== current && current.parent !== null) {
+    this.setState(prevstate => {
+      let current = prevstate.graph.goalNode;
+      const path = [];
+      let i;
+      //if node's parent is not itself and there's a path
+      while (current.parent !== current && current.parent !== null) {
+        path.unshift({ row: current.row, col: current.col });
+        current = current.parent;
+      }
+      console.log(current);
       path.unshift({ row: current.row, col: current.col });
-      current = current.parent;
-    }
-    path.unshift({ row: current.row, col: current.col });
 
-    if (current.parent === current) {
-      path.forEach((coordinates, iteration) => {
-        i = iteration;
+      if (current.parent === current) {
+        path.forEach((coordinates, iteration) => {
+          i = iteration;
+
+          if (this.state.instantAnimation) {
+            this.setState((state, props) => {
+              const newGraph = this.copyGraph(state);
+              newGraph.nodes[coordinates.row][
+                coordinates.col
+              ].instantPath = true;
+              return { graph: newGraph };
+            });
+          } else {
+            setTimeout(() => {
+              this.setState((state, props) => {
+                const newGraph = this.copyGraph(state);
+                newGraph.nodes[coordinates.row][coordinates.col].isPath = true;
+                return { graph: newGraph };
+              });
+            }, 50 * iteration);
+          }
+        });
+      }
+
+      if (this.state.instantAnimation)
+        this.setState({ animationActivated: false });
+      else {
         setTimeout(() => {
-          this.setState((state, props) => {
-            const newGraph = this.copyGraph(state);
-            newGraph.nodes[coordinates.row][coordinates.col].isPath = true;
-            return { graph: newGraph };
-          });
-        }, 50 * iteration);
-      });
-    }
-    setTimeout(() => {
-      this.setState({ animationActivated: false });
-    }, 50 * i);
+          this.setState({ animationActivated: false });
+        }, 50 * i);
+      }
+    });
   };
 
   clearWalls = () => {

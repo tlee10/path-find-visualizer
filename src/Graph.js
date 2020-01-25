@@ -30,6 +30,8 @@ class Graph {
       visited: false,
       depth: 0,
       weight: 1,
+      instantVisited: false,
+      instantPath: false,
       g: 0,
       h: 0,
       f: 0
@@ -57,6 +59,8 @@ class Graph {
         node.depth = 0;
         node.visited = false;
         node.isPath = false;
+        node.instantVisited = false;
+        node.instantPath = false;
       });
     });
     this.closed = [];

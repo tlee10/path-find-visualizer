@@ -66,6 +66,11 @@ strong {
   animation-play-state: running;
 }
 
+.instantVisited {
+  border: 0.05px solid rgb(189, 189, 189);
+  background-color: rgba(0, 190, 218, 0.75);
+}
+
 .path {
   border: 0.5px solid rgb(255, 230, 7);
   animation-name: pathAnimation;
@@ -76,6 +81,11 @@ strong {
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
   animation-play-state: running;
+}
+
+.instantPath {
+  border: 0.5px solid rgb(255, 230, 7);
+  background-color: rgba(255, 251, 1, 0.75);
 }
 
 @keyframes visitedAnimation {
