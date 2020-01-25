@@ -176,7 +176,7 @@ class App extends Component {
   };
 
   onMouseUp = () => {
-    if (this.state.clickAction !== "") this.setState({ clickAction: "" });
+    if (this.state.clickAction !== "") this.setState({ clickAction: "", instantAnimation: false });
   };
 
   onContextMenu = (e, node) => {
