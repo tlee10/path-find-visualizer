@@ -232,27 +232,29 @@ class App extends Component {
     this.setState(prevstate => {
       const oldGraph = prevstate.graph;
       let i;
+      let graph = this.copyGraph(prevstate);
       oldGraph.closed.forEach((node, iteration) => {
         i = iteration;
         if (this.state.instantAnimation) {
-          this.setState((state, props) => {
-            //console.log(state.graph);
-            const graph = this.copyGraph(state);
-            graph.nodes[node.row][node.col].instantVisited = true;
-            return { graph };
-          });
+          graph.nodes[node.row][node.col].instantVisited = true;
+
         } else {
           setTimeout(() => {
             this.setState((state, props) => {
-              const graph = this.copyGraph(state);
+              graph = this.copyGraph(state);
               graph.nodes[node.row][node.col].visited = true;
               return { graph };
             });
           }, 50 * iteration);
         }
       });
-      if (this.state.instantAnimation) this.animatePath();
-      else setTimeout(() => this.animatePath(), 50 * (i + 1));
+      if (this.state.instantAnimation) {
+        this.setState({graph});
+        this.animatePath();
+      }
+      else {
+        setTimeout(() => this.animatePath(), 50 * (i + 1));
+      }
     });
   };
 
@@ -266,25 +268,22 @@ class App extends Component {
         path.unshift({ row: current.row, col: current.col });
         current = current.parent;
       }
-      console.log(current);
       path.unshift({ row: current.row, col: current.col });
+
+      let newGraph = this.copyGraph(prevstate);
 
       if (current.parent === current) {
         path.forEach((coordinates, iteration) => {
           i = iteration;
 
           if (this.state.instantAnimation) {
-            this.setState((state, props) => {
-              const newGraph = this.copyGraph(state);
-              newGraph.nodes[coordinates.row][
-                coordinates.col
-              ].instantPath = true;
-              return { graph: newGraph };
-            });
+            newGraph.nodes[coordinates.row][
+              coordinates.col
+            ].instantPath = true;
           } else {
             setTimeout(() => {
               this.setState((state, props) => {
-                const newGraph = this.copyGraph(state);
+                newGraph = this.copyGraph(state);
                 newGraph.nodes[coordinates.row][coordinates.col].isPath = true;
                 return { graph: newGraph };
               });
@@ -294,7 +293,7 @@ class App extends Component {
       }
 
       if (this.state.instantAnimation)
-        this.setState({ animationActivated: false });
+        this.setState({ graph: newGraph, animationActivated: false });
       else {
         setTimeout(() => {
           this.setState({ animationActivated: false });
