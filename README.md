@@ -1,4 +1,4 @@
-Check out the visualizer ---> [path-find-visualizer](https://tlee10.github.io/path-find-visualizer).
+Check out the visualizer (on pc) ---> [path-find-visualizer](https://tlee10.github.io/path-find-visualizer).
 
 ## Available Features
 
